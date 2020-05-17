@@ -80,3 +80,5 @@ while first_day <= last_day:
     iter += 1
 print('Ответ: на {} день спортсмен достиг результата \
     - не менее {} км'.format(iter, last_day))
+
+# Направляю на проверку
