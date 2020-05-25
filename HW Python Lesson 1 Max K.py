@@ -1,82 +1,82 @@
 # Задание № 1
 
-a = 24
-b = 10
-c = 4
-print(a, b, c)
-
-list_numb = []
-list_str = []
-i = 1
-n = 1
-while i < 4:
-    number = int(input('Введите число № {}: '.format(i)))
-    list_numb.append(number)
-    i += 1
-print(list_numb)
-
-while n < 4:
-    str = input('Введите существительное № %s: ' % (n))
-    list_str.append(str)
-    n += 1
-print(list_str)
+def div1(divident, divider):
+    try:
+        divident = float(input("Укажите делимое: "))
+        divider = float(input("Укажите делитель: "))
+        quotient = divident / divider
+    except ValueError:
+        print('Введите целые или дробные числа')
+        return
+    except ZeroDivisionError:
+        print('Деление на ноль!')
+        return
+    quotient = divident / divider
+    return print('Частное', quotient)
+div1(1, 1)
 
 # Задание № 2
 
-sec = int(input('Введите значение времени в секундах: '))
-hour = 0
-minute = 0
-if sec > 3600:
-    hour = sec // 3600
-    minute = (sec - hour * 3600) // 60
-    sec_view = sec - hour * 3600 - minute * 60
-elif sec < 3600 and sec > 60:
-    minute = sec // 60
-    sec_view = sec - minute * 60
-else:
-    sec_view = sec
-print('%s : %s : %s' % (hour, minute, sec_view))
+def biogaph(**kwargs):
+    return kwargs
+print(biogaph(Имя = 'Max', Фамилия = 'Rezanov',
+              Год_рождения = 1987, Город_проживания =
+              'Химки', E_mail = 'ggg@maail.ru', телефон =
+              678910).values())
 
 # Задание № 3
 
-n = input('Введите число n: ')
-sum = int(n) + int(n * 2) + int(n * 3)
-print('Cумма n+nn+nnn = ', sum)
+def my_func(number_1, number_2, number_3):
+    list_my_fync = sorted([number_1, number_2, number_3], reverse = True)
+    sum = list_my_fync[0] + list_my_fync[1]
+    return sum
+print(my_func(1, 7, 23))
 
-# Задание № 4
+# Задание № 4 через **
 
-a = int(input('Введите целое положительное число: '))
-m = a % 10
-a = a // 10
-while a > 0:
-    if a % 10 > m:
-        m = a % 10
-    a = a // 10
-print(m)
+def my_funk(x, y):
+    expression = x ** y
+    return expression
+print(my_funk(5, -3))
+
+# Задание № 4 через цикл
+
+def my_funk(x, y):
+    i = 1
+    if y < 0:
+        x = 1 / x
+    expression = x
+    while i < abs(y):
+        if y == 0:
+            expression = 1
+            break
+        expression *= x
+        i += 1
+    return round(expression, 4)
+print(my_funk(5, -3))
 
 # Задание № 5
 
-income = int(input('Введите значение выручки компании: '))
-spend = int(input('Введите значение издержек компании: '))
-if income > spend:
-    print('Прибыль')
-    rent_index = income / spend * 100
-    print('Рентабельность равна ', round(rent_index, 2), '%')
-elif income < spend:
-    print('Убыток')
-else:
-    print('Выходите на ноль')
-pers = int(input('Какова численность сотрудников компании: '))
-pers_income = income / pers
-print('Прибыль компании из расчёта на 1 сотрудника: ', round(pers_income, 2))
+sum_list = 0
+i = None
+while i != 'Q':
+    my_list = input('Введите несколько чисел через пробел для суммирования, Q выход: ').split()
+    if my_list.count('Q') != 0:
+        q_index = my_list.index('Q')
+        my_list = my_list[:q_index]
+        i = 'Q'
+    my_list_int = map(lambda number: int(number), my_list)
+    sum_list += sum(my_list_int)
+    print(sum_list)
 
-# Задание 6
+# Задание № 6
 
-first_day = 2
-last_day = 8
-iter = 1
-while first_day <= last_day:
-    first_day = 1.1 * first_day
-    iter += 1
-print('Ответ: на {} день спортсмен достиг результата \
-    - не менее {} км'.format(iter, last_day))
+def int_func(word):
+    return word.title()
+print(int_func('макентош'))
+my_strs = input('Введите несколько слов с маленькой буквы: ').split()
+my_strs_title = []
+for my_str in my_strs:
+    my_str_title = int_func(my_str)
+    my_strs_title.append(my_str_title)
+print(' '.join(my_strs_title))
