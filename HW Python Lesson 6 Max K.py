@@ -147,3 +147,6 @@ st_3 = Handle()
 st_1.draw()
 st_2.draw()
 st_3.draw()
+
+
+Отправляю на проверку
