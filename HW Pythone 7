@@ -1,0 +1,88 @@
+# Задача № 1
+import numpy
+
+class Matrix:
+    def __init__(self, data):
+        self.m_x = numpy.array([data])
+
+    def __str__(self):
+        return '\n'.join([' '.join([str(i) for i in line]) for line in self.m_x])
+
+    def __add__(self, other):
+        self.m_x_s = self.m_x + numpy.array([other])
+        return self.m_x_s
+
+
+m_1 = Matrix([[1, 2, 3, 4, 5], [22, 55, 66, 44, 78]])
+m_2 = Matrix([[5, 4, 3, 2, 1], [88, 45, 44, 66, 22]])
+a = [5, 4, 3, 2, 1], [88, 45, 44, 66, 22]
+print(m_1)
+print(m_2)
+print(m_1 + a)
+
+# Задача № 2
+from abc import ABC, abstractmethod
+
+
+class Clothes(ABC):
+
+    def __init__(self, name):
+        self.name = name
+
+    @abstractmethod
+    def calculation(self):
+        pass
+
+
+class Coat(Clothes):
+
+    @property
+    def calculation(self):
+        self.calc = self.name / 6.5 + 0.5
+        return self.calc
+
+
+class Suit(Clothes):
+
+    @property
+    def calculation(self):
+        self.calc = 2 * self.name + 0.3
+        return self.calc
+
+coat_l = Coat(52)
+suit_l = Suit(52)
+print(coat_l.calculation, suit_l.calculation)
+
+# Задача № 3
+
+
+class Cell:
+    def __init__(self, int_cell):
+        self.cells = int_cell
+
+    def __add__(self, other):
+        return 'Сумма клеток равняется ' + str(self.cells + other.cells)
+
+    def __sub__(self, other):
+        if other.cells > self.cells:
+            print('Вычитание невозможно')
+        else:
+            sub_cells = self.cells - other.cells
+        return 'Разница клеток равняется ' + str(sub_cells)
+
+    def __mul__(self, other):
+        return 'Умножение клеток даст ' + str(self.cells * other.cells)
+
+    def __floordiv__(self, other):
+        return self.cells // other.cells if other.cells >= 0 else 'Деление на ноль'
+
+    def make_order(self, lines):
+        return '\n'.join(['*' * lines for _ in range(self.cells // lines)]) + '\n' + '*' * (self.cells % lines)
+
+c_1 = Cell(40)
+с_2 = Cell(20)
+print(c_1 + с_2)
+print(c_1 - с_2)
+print(c_1 * с_2)
+print(c_1 // с_2)
+print(с_2.make_order(6))
