@@ -1,0 +1,359 @@
+# 1. Реализовать класс «Дата», функция-конструктор которого должна принимать дату
+# в виде строки формата «день-месяц-год». В рамках класса реализовать два метода.
+# Первый, с декоратором @classmethod, должен извлекать число, месяц, год и преобразовывать
+# их тип к типу «Число». Второй, с декоратором @staticmethod, должен проводить валидацию числа,
+# месяца и года (например, месяц — от 1 до 12). Проверить работу полученной структуры на реальных данных.
+
+
+class Data:
+    data = input('Введите число в формате "день-месяц-год"')
+
+    @classmethod
+    def enumer_data(cls):
+        str_list = cls.data.split('-')
+        int_list = [int(i) for i in str_list]
+        return int_list
+
+    @staticmethod
+    def valid():
+        valid_dict = {
+            1: 30,
+            2: 28,
+            3: 31,
+            4: 30,
+            5: 31,
+            6: 30,
+            7: 31,
+            8: 31,
+            9: 30,
+            10: 31,
+            11: 30,
+            12: 31
+        }
+        sample = Data.enumer_data()
+        valid_date = []
+        if sample[1] >= 1 and sample[1] <= 12:
+            true_date = sample[0] if sample[0] >= 1 and sample[0] <= valid_dict[sample[1]] else 'Некорректная дата'
+            valid_date.append(true_date)
+            true_month = sample[1]
+            valid_date.append(true_month)
+            true_year = sample[2] if sample[2] >= 0 and sample[2] <= 2020 else 'Введите дату после рождества христова'
+            valid_date.append(true_year)
+        else:
+            true_month = 'Некорректный месяц'
+            valid_date.append(true_month)
+        return valid_date
+
+print(Data.valid())
+
+#2. Создайте собственный класс-исключение, обрабатывающий ситуацию деления на нуль.
+# Проверьте его работу на данных, вводимых пользователем. При вводе пользователем нуля
+# в качестве делителя программа должна корректно обработать эту ситуацию и не завершиться с ошибкой.
+
+
+class OwnError(Exception):
+
+    def __init__(self, name):
+        self.er = name
+
+sample = int(input('Введите число, чтобы разделить число 100'))
+try:
+    if sample == 0:
+        raise OwnError('Деление на ноль')
+    else:
+        div = 100 / sample
+        print(div)
+except OwnError:
+    print('Собственный класс-исключение')
+
+#3. Создайте собственный класс-исключение, который должен проверять содержимое
+# списка на наличие только чисел. Проверить работу исключения на реальном примере.
+# Необходимо запрашивать у пользователя данные и заполнять список. Класс-исключение
+# должен контролировать типы данных элементов списка.
+# Примечание: длина списка не фиксирована. Элементы запрашиваются бесконечно,
+# пока пользователь сам не остановит работу скрипта, введя, например, команду “stop”.
+# При этом скрипт завершается, сформированный список выводится на экран.
+# Подсказка: для данного задания примем, что пользователь может вводить только числа и строки.
+# При вводе пользователем очередного элемента необходимо реализовать проверку типа элемента
+# и вносить его в список, только если введено число. Класс-исключение должен не позволить
+# пользователю ввести текст (не число) и отобразить соответствующее сообщение.
+# При этом работа скрипта не должна завершаться.
+#
+#
+class OwnError(Exception):
+
+    def __init__(self, name_er):
+        self.er = name_er
+
+
+true_int_list = []
+while True:
+    sample = input('Введите данные для списка, или команду "Stop" для остановки скрипта: ')
+    if sample == 'Stop':
+        print(true_int_list)
+        break
+    else:
+        try:
+            if sample.isdigit() == False:
+                raise OwnError('Работаем только с числами')
+        except OwnError:
+            print('Ошибка! Повторите ввод (необходимы только чила)')
+        else:
+            true_int_list.append(int(sample))
+
+# 4. Начните работу над проектом «Склад оргтехники». Создайте класс, описывающий склад.
+# А также класс «Оргтехника», который будет базовым для классов-наследников.
+# Эти классы — конкретные типы оргтехники (принтер, сканер, ксерокс). В базовом классе определить
+# параметры, общие для приведенных типов. В классах-наследниках реализовать параметры,
+# уникальные для каждого типа оргтехники.
+
+
+class WareHouse:
+    pass
+
+
+class OfficeЕquipments:
+
+    def __init__(self):
+        self.body_color = 'White'
+        self.print_method = 'Laser'
+        self.manufacturer = 'Canon'
+
+
+class Printer(OfficeЕquipments):
+
+    def __init__(self, oe_type):
+        super().__init__()
+        self.eo = oe_type
+
+    def __call__(self, price = None):
+        print('Тип техники', self.eo, 'Цвет техники', self.body_color, 'Метод печати',
+              self.print_method, 'Производитель', self.manufacturer, 'Цена', price)
+
+
+class Scaner(OfficeЕquipments):
+
+    def __init__(self, oe_type):
+        super().__init__()
+        self.eo = oe_type
+
+    def __call__(self, price=None):
+        print('Тип техники', self.eo, 'Цвет техники', self.body_color, 'Метод печати',
+              self.print_method, 'Производитель', self.manufacturer, 'Цена', price)
+
+class Copier(OfficeЕquipments):
+
+    def __init__(self, oe_type):
+        super().__init__()
+        self.eo = oe_type
+
+    def __call__(self, price=None):
+        print('Тип техники', self.eo, 'Цвет техники', self.body_color, 'Метод печати',
+              self.print_method, 'Производитель', self.manufacturer, 'Цена', price)
+
+oe_1 = Printer('Принтер')
+oe_2 = Scaner('Сканер')
+oe_3 = Copier('Копировальный аппарат')
+oe_1(15000)
+oe_2(25000)
+oe_3(35000)
+
+# 5. Продолжить работу над первым заданием. Разработать методы, отвечающие
+# за приём оргтехники на склад и передачу в определенное подразделение компании.
+# Для хранения данных о наименовании и количестве единиц оргтехники, а также других данных,
+# можно использовать любую подходящую структуру, например словарь.
+
+
+class WareHouse:
+    def __init__(self):
+        self.journal_1 = {}
+        self.journal_2 = {}
+
+    def stored(self, quantity, class_name):
+        self.journal_1['Количество'] = quantity
+        self.journal_1['Параметры'] = class_name.param_list
+
+    def send(self, departament):
+        self.journal_2['Объект'] = self.journal_1
+        self.journal_2['Направляется в'] = departament
+
+    def __call__(self, number):
+        print(self.journal_1 if number == 1 else self.journal_2)
+
+
+class OfficeЕquipments:
+
+    def __init__(self):
+        self.body_color = 'White'
+        self.print_method = 'Laser'
+        self.manufacturer = 'Canon'
+
+
+class Printer(OfficeЕquipments):
+
+    def __init__(self, oe_type, price):
+        super().__init__()
+        self.eo = oe_type
+        self.price = price
+
+    def param_list(self):
+        printer_list = ['Тип техники', self.eo, 'Цвет техники', self.body_color, 'Метод печати',
+              self.print_method, 'Производитель', self.manufacturer, 'Цена', self.price]
+        return printer_list
+
+
+class Scaner(OfficeЕquipments):
+
+    def __init__(self, oe_type, price):
+        super().__init__()
+        self.eo = oe_type
+        self.price = price
+
+    def param_list(self):
+        scaner_list = ['Тип техники', self.eo, 'Цвет техники', self.body_color, 'Метод печати',
+                        self.print_method, 'Производитель', self.manufacturer, 'Цена', self.price]
+        return scaner_list
+
+class Copier(OfficeЕquipments):
+
+    def __init__(self, oe_type, price):
+        super().__init__()
+        self.eo = oe_type
+        self.price = price
+
+    def param_list(self):
+        copier_list = ['Тип техники', self.eo, 'Цвет техники', self.body_color, 'Метод печати',
+                        self.print_method, 'Производитель', self.manufacturer, 'Цена', self.price]
+        return copier_list
+
+
+oe_1 = Printer('Принтер', 15000)
+oe_2 = Scaner('Сканер', 25000)
+oe_3 = Copier('Копировальный аппарат', 20000)
+wh = WareHouse()
+wh.stored(5, oe_1)
+wh(1)
+wh.send('Бухгалтерия')
+wh(2)
+wh.stored(2, oe_2)
+wh(1)
+wh.stored(5, oe_3)
+wh(1)
+
+
+# 6. Продолжить работу над вторым заданием. Реализуйте механизм валидации вводимых
+# пользователем данных. Например, для указания количества принтеров, отправленных на склад,
+# нельзя использовать строковый тип данных.
+# Подсказка: постарайтесь по возможности реализовать в проекте «Склад оргтехники»
+# максимум возможностей, изученных на уроках по ООП.
+
+class OwnError(Exception):
+    def __init__(self, name_er):
+        self.er = name_er
+
+
+class WareHouse:
+    def __init__(self):
+        self.journal_1 = {}
+        self.journal_2 = {}
+
+    def stored(self, quantity, class_name):
+        try:
+            if str(quantity).isdigit():
+                self.journal_1['Количество'] = quantity
+                self.journal_1['Параметры'] = class_name.param_list
+            else:
+                raise OwnError('Только числа')
+        except OwnError as e:
+            print(f'Скорректируйте ввод, {e}')
+
+    def send(self, departament):
+        self.journal_2['Объект'] = self.journal_1
+        self.journal_2['Направляется в'] = departament
+
+    def __call__(self, number):
+        print(self.journal_1 if number == 1 else self.journal_2)
+
+
+class OfficeЕquipments:
+
+    def __init__(self):
+        self.body_color = 'White'
+        self.print_method = 'Laser'
+        self.manufacturer = 'Canon'
+
+
+class Printer(OfficeЕquipments):
+
+    def __init__(self, oe_type, price):
+        super().__init__()
+        self.eo = oe_type
+        self.price = price
+
+    def param_list(self):
+        printer_list = ['Тип техники', self.eo, 'Цвет техники', self.body_color, 'Метод печати',
+              self.print_method, 'Производитель', self.manufacturer, 'Цена', self.price]
+        return printer_list
+
+
+class Scaner(OfficeЕquipments):
+
+    def __init__(self, oe_type, price):
+        super().__init__()
+        self.eo = oe_type
+        self.price = price
+
+    def param_list(self):
+        scaner_list = ['Тип техники', self.eo, 'Цвет техники', self.body_color, 'Метод печати',
+                        self.print_method, 'Производитель', self.manufacturer, 'Цена', self.price]
+        return scaner_list
+
+
+class Copier(OfficeЕquipments):
+
+    def __init__(self, oe_type, price):
+        super().__init__()
+        self.eo = oe_type
+        self.price = price
+
+    def param_list(self):
+        copier_list = ['Тип техники', self.eo, 'Цвет техники', self.body_color, 'Метод печати',
+                        self.print_method, 'Производитель', self.manufacturer, 'Цена', self.price]
+        return copier_list
+
+
+oe_1 = Printer('Принтер', 15000)
+oe_2 = Scaner('Сканер', 25000)
+oe_3 = Copier('Копировальный аппарат', 20000)
+wh = WareHouse()
+wh.stored('five', oe_1)
+wh(1)
+wh.send('Бухгалтерия')
+wh(2)
+wh.stored(2, oe_2)
+wh(1)
+wh.stored(5, oe_3)
+wh(1)
+
+
+# 7. Реализовать проект «Операции с комплексными числами». Создайте класс
+# «Комплексное число», реализуйте перегрузку методов сложения и умножения комплексных чисел.
+# Проверьте работу проекта, создав экземпляры класса (комплексные числа) и выполнив
+# сложение и умножение созданных экземпляров. Проверьте корректность полученного результата.
+
+
+class ComplexNumber:
+
+    def __init__(self, a, b):
+        self.complex = complex(a, b)
+
+    def __add__(self, other):
+        return str(self.complex + other.complex)
+
+    def __mul__(self, other):
+        return str(self.complex * other.complex)
+
+c_1 = ComplexNumber(10, 3)
+c_2 = ComplexNumber(4, 0.03)
+print(c_1 + c_2)
+print(c_1 * c_2)
